@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ORVEXA — The Infinite Profile</title>
+<meta name="description" content="ORVEXA is an Infinite Profile System: one identity that unfolds into endless, deterministic states. Explore beyond the profile.">
+<meta name="theme-color" content="#050506">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ORVEXA">
+<meta property="og:title" content="ORVEXA — The Infinite Profile">
+<meta property="og:description" content="One identity. Infinite states. Explore beyond the profile.">
+<meta property="og:image" content="icon.svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ORVEXA — The Infinite Profile">
+<meta name="twitter:description" content="One identity. Infinite states. Explore beyond the profile.">
+<meta name="twitter:image" content="icon.svg">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = 'js';</script>
+</head>
+<body data-view="gate">
+
+<section id="gate" class="gate" aria-labelledby="gateTitle">
+  <div class="gate-in">
+    <h1 id="gateTitle" class="wordmark">ORVEXA</h1>
+    <p class="tagline">ONE IDENTITY. INFINITE STATES.</p>
+    <p id="gateHint" class="gate-hint" hidden></p>
+    <button id="enter" class="enter" type="button" data-act="enter">ENTER</button>
+    <p class="nojs">ORVEXA builds every state in your browser. Turn on JavaScript to enter.</p>
+  </div>
+</section>
+
+<div id="app" class="app" hidden>
+  <header class="top">
+    <button class="brand" type="button" data-act="return" aria-label="Return to the entrance">ORVEXA</button>
+    <nav class="top-actions" aria-label="Tools">
+      <button class="tbtn" type="button" data-act="search">Search</button>
+      <button class="tbtn" type="button" data-act="library">Library</button>
+    </nav>
+  </header>
+
+  <main id="stage" class="stage" tabindex="-1">
+    <div id="notice" class="notice" role="status" hidden>
+      <span id="noticeText"></span>
+      <button type="button" class="mini" data-act="dismiss">Dismiss</button>
+    </div>
+
+    <div class="meta">
+      <h1 id="sid" class="sid">ORVEXA / 000001</h1>
+      <p id="epi" class="epi"></p>
+      <p id="modeLine" class="modeline" hidden>Discovery view <button type="button" class="mini" data-act="standard">Standard view</button></p>
+      <div class="actions">
+        <button type="button" class="chipbtn" data-act="jump">Jump</button>
+        <button type="button" class="chipbtn" data-act="graph">Connections</button>
+        <button type="button" class="chipbtn" id="saveBtn" data-act="save" aria-pressed="false">Save</button>
+        <button type="button" class="chipbtn" data-act="share">Share</button>
+      </div>
+    </div>
+
+    <div id="state" class="state"></div>
+    <section id="deep" class="deep" aria-label="Deep mode" hidden></section>
+
+    <footer class="foot">
+      <p class="foot-tag">EXPLORE BEYOND THE PROFILE.</p>
+      <p>Every state is built in your browser from its number. Content is conceptual and fictional. Anything about the future is a possibility, not a fact.</p>
+    </footer>
+  </main>
+
+  <nav class="dock" aria-label="State navigation">
+    <div class="dock-in">
+      <button type="button" class="dbtn" data-act="prev" aria-label="Previous state">Previous</button>
+      <button type="button" class="dbtn" data-act="random" aria-label="Random state">Random</button>
+      <button type="button" class="dbtn main" data-act="discover" aria-label="Discover a new state">Discover</button>
+      <button type="button" class="dbtn" id="deepBtn" data-act="deep" aria-pressed="false">Deep dive</button>
+      <button type="button" class="dbtn" data-act="next" aria-label="Next state">Next</button>
+    </div>
+  </nav>
+</div>
+
+<dialog id="sheet" aria-labelledby="sheetTitle">
+  <div class="sheet-in">
+    <div class="sheet-head">
+      <h2 id="sheetTitle">Jump to a state</h2>
+      <button type="button" class="mini" data-act="close">Close</button>
+    </div>
+
+    <section data-panel="jump" hidden>
+      <form id="jumpForm" novalidate>
+        <label for="jumpIn">State number</label>
+        <input id="jumpIn" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="18472" aria-describedby="jumpErr">
+        <button type="submit" class="btn pri">Open state</button>
+      </form>
+      <p id="jumpErr" class="err" role="alert"></p>
+      <p class="hint">Any whole number from 1 upward works.</p>
+    </section>
+
+    <section data-panel="search" hidden>
+      <form id="searchForm" role="search" novalidate>
+        <label for="q" class="sr">Search ORVEXA</label>
+        <input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="State number, idea 903, project 42, or a word">
+      </form>
+      <div id="results" class="results"></div>
+    </section>
+
+    <section data-panel="library" hidden>
+      <h3>Saved states</h3>
+      <ul id="savedList" class="list"></ul>
+      <p id="savedEmpty" class="hint">Nothing saved yet. Use Save on any state.</p>
+      <h3>Recently explored</h3>
+      <ul id="histList" class="list"></ul>
+      <p id="histEmpty" class="hint">Your path will appear here as you explore.</p>
+      <button type="button" class="btn" id="clearHist" data-act="clear-history">Clear history</button>
+      <p id="storeNote" class="hint" hidden>Browser storage is unavailable, so saved states and history last only until you close this tab.</p>
+    </section>
+
+    <section data-panel="share" hidden>
+      <label for="shareLink">Link to this state</label>
+      <input id="shareLink" readonly>
+      <div class="btnrow">
+        <button type="button" class="btn pri" data-act="native-share">Share</button>
+        <button type="button" class="btn" data-act="copy-link">Copy state link</button>
+        <button type="button" class="btn" data-act="copy-id">Copy state ID</button>
+      </div>
+    </section>
+
+    <section data-panel="graph" hidden>
+      <ol id="chain" class="chain"></ol>
+      <h3>Nearby nodes</h3>
+      <div id="nodes"></div>
+      <p id="trace" class="hint"></p>
+    </section>
+  </div>
+</dialog>
+
+<p id="toast" class="toast" role="status" aria-live="polite"></p>
+<p id="announce" class="sr" aria-live="polite"></p>
+
+<script src="script.js" defer></script>
+</body>
+</html>
